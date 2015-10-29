@@ -1,6 +1,6 @@
 {
-  "name": "testgrnt",
-  "version": "0.0.1",
+  "name": "webapp_template",
+  "version": "0.1.0",
   "authors": [
     "ShineKami <sluciferk@gmail.com>"
   ],
@@ -13,7 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "normalize.css": "*",
-    "jquery": "2.*"
+    "jquery": "2.*",
+    "normalize-scss": "~3.0.3"
   }
 }
