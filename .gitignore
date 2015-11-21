@@ -1,4 +1,15 @@
+.DS_Store
+*.log
 node_modules
 bower_components
 build
-src/psd/**/*.psd
+*.node
+components
+coverage
+*.orig
+.idea
+sandbox
+test/out-fixtures/*
+test/watch-*.txt
+gulp.1
+*.psd

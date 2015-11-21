@@ -1,10 +1,10 @@
 {
   "name": "webapp_template",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "authors": [
     "ShineKami <shinekami@madys.net>"
   ],
-  "license": "MIT",
+  "license": "GNU/Linux",
   "ignore": [
     "**/.*",
     "node_modules",
