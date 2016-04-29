@@ -10,7 +10,7 @@
         uglify = require('gulp-uglify'),
         sass = require('gulp-sass'),
         sourcemaps = require('gulp-sourcemaps'),
-        rigger = require('gulp-rigger'),
+        fileinclude = require('gulp-file-include'),
         cssmin = require('gulp-minify-css'),
         imagemin = require('gulp-imagemin'),
         pngquant = require('imagemin-pngquant'),
@@ -22,6 +22,7 @@
 
     //project setting
     var settings = {
+        buildName: 'templates',
         //ftp settings
         ftp:{
             host: '',
@@ -35,17 +36,17 @@
     var path = {
         //Path for build
         build: {
-            project: 'build/**/*.*', 
-            html: 'build/',
-            js: 'build/js/',
-            css: 'build/css/',
-            imgs: 'build/imgs/',
-            images: 'build/images/',
-            fonts: 'build/fonts/',
+            project: '../'+settings.buildName+'/**/*.*', 
+            tpl: '../'+settings.buildName+'/',
+            js: '../'+settings.buildName+'/js/',
+            css: '../'+settings.buildName+'/css/',
+            imgs: '../'+settings.buildName+'/imgs/',
+            images: '../'+settings.buildName+'/images/',
+            fonts: '../'+settings.buildName+'/fonts/',
         },
         //Path for resources
         src: {
-            html: 'src/template/*.html', 
+            tpl: 'src/template/*.*', 
             js: 'src/js/main.js',
             style: 'src/style/main.scss',
             imgs: 'src/imgs/**/*.*',
@@ -54,35 +55,30 @@
         },
         //Path for watched files
         watch: {
-            html: 'src/template/**/*.html',
+            tpl: 'src/template/**/*.*',
             js: 'src/js/**/*.js',
-            style: 'src/style/**/*.scss',
+            style: 'src/style/**/*.*',
             imgs: 'src/imgs/**/*.*',
             images: 'src/images/**/*.*',
             fonts: 'src/fonts/**/*.*'
         },
-        clean: './build'
+        clean: '../'+settings.buildname
     };
 
     //server config
     var server_config = {
-        server: {
-            baseDir: "./build"
-        },
-        tunnel: false,
-        host: 'localhost',
-        port: 9000,
+        proxy: "lazypay.prj/templates/",
         logPrefix: "Frontend_Devil"
     };
 //####################//
 
 //--Project tasks--//
     //Template html task
-    gulp.task('html:build', function () {
-        gulp.src(path.src.html)
+    gulp.task('tpl:build', function () {
+        gulp.src(path.src.tpl)
             .pipe(plumber())
-            .pipe(rigger())
-            .pipe(gulp.dest(path.build.html))
+            .pipe(fileinclude())
+            .pipe(gulp.dest(path.build.tpl))
             .pipe(reload({stream: true}));
     });
 
@@ -90,7 +86,7 @@
     gulp.task('js:build', function () {
         gulp.src(path.src.js)
             .pipe(plumber())
-            .pipe(rigger())
+            .pipe(fileinclude())
             .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(sourcemaps.write('../js', {
@@ -155,8 +151,8 @@
 
     //Template watch task
     gulp.task('watch', function(){
-        watch([path.watch.html], function(event, cb) {
-            gulp.start('html:build');
+        watch([path.watch.tpl], function(event, cb) {
+            gulp.start('tpl:build');
         });
         watch([path.watch.style], function(event, cb) {
             gulp.start('style:build');
@@ -179,14 +175,14 @@
 
     //Load project on ftp
     gulp.task('send_ftp', function () {
-    return gulp.src(path.build.project)
-        .pipe(ftp({
-            host: settings.ftp.host,
-            user: settings.ftp.user,
-            pass: settings.ftp.pass,
-            remotePath: settings.ftp.remotePath
-        }))
-        .pipe(gutil.noop());
+        return gulp.src(path.build.project)
+            .pipe(ftp({
+                host: settings.ftp.host,
+                user: settings.ftp.user,
+                pass: settings.ftp.pass,
+                remotePath: settings.ftp.remotePath
+            }))
+            .pipe(gutil.noop());
     });
 
     //rm temp files
@@ -196,9 +192,57 @@
 //#################//
 
 //--Project builds--//
+   //Template js task
+    gulp.task('js:build-dev', function () {
+        gulp.src(path.src.js)
+            .pipe(plumber())
+            .pipe(fileinclude())
+            .pipe(gulp.dest(path.build.js))
+            .pipe(reload({stream: true}));
+    });
+
+    //Template css task
+    gulp.task('style:build-dev', function () {
+        gulp.src(path.src.style)
+            .pipe(plumber())
+            .pipe(sass({errLogToConsole: true}))
+            .pipe(prefixer())
+            .pipe(gulp.dest(path.build.css))
+            .pipe(reload({stream: true}));
+    });
+
+    //Template images task
+    gulp.task('imgs:build-dev', function () {
+        gulp.src(path.src.imgs)
+            .pipe(plumber())
+            .pipe(gulp.dest(path.build.imgs))
+            .pipe(reload({stream: true}));
+    });
+
+    //Other images task
+    gulp.task('images:build-dev', function () {
+        gulp.src(path.src.images)
+            .pipe(plumber())
+            .pipe(gulp.dest(path.build.images))
+            .pipe(reload({stream: true}));
+    });
+
     //Dev build
     gulp.task('build-dev', [
-        'html:build',
+        'clean',
+        'tpl:build',
+        'js:build-dev',
+        'style:build-dev',
+        'imgs:build-dev',
+        'images:build-dev',
+        'fonts:build',
+        'webserver', 
+        'watch'
+    ]);
+
+    //Relise build
+    gulp.task('build-end', [
+        'tpl:build',
         'js:build',
         'style:build',
         'fonts:build',
@@ -207,15 +251,7 @@
         'webserver', 
         'watch'
     ]);
-
-    //js test
-    gulp.task('build-js', [
-        'js:build',
-        'webserver',
-        'watch'
-    ]);
-
-    //css test
 //##################//
 
+//Default task
 gulp.task('default', ['build-dev']);
