@@ -11,7 +11,7 @@
         sass = require('gulp-sass'),
         sourcemaps = require('gulp-sourcemaps'),
         fileinclude = require('gulp-file-include'),
-        cssmin = require('gulp-minify-css'),
+        cssclean = require('gulp-clean-css'),
         imagemin = require('gulp-imagemin'),
         pngquant = require('imagemin-pngquant'),
         rimraf = require('rimraf'),
@@ -46,7 +46,7 @@
         },
         //Path for resources
         src: {
-            tpl: 'src/template/*.*', 
+            tpl: 'src/template/*.html', 
             js: 'src/js/main.js',
             style: 'src/style/main.scss',
             imgs: 'src/imgs/**/*.*',
@@ -55,9 +55,9 @@
         },
         //Path for watched files
         watch: {
-            tpl: 'src/template/**/*.*',
+            tpl: 'src/template/**/*.html',
             js: 'src/js/**/*.js',
-            style: 'src/style/**/*.*',
+            style: 'src/style/**/*.scss',
             imgs: 'src/imgs/**/*.*',
             images: 'src/images/**/*.*',
             fonts: 'src/fonts/**/*.*'
@@ -67,7 +67,7 @@
 
     //server config
     var server_config = {
-        proxy: "lazypay.prj/templates/",
+        host: "localhost",
         logPrefix: "Frontend_Devil"
     };
 //####################//
@@ -105,7 +105,10 @@
             .pipe(sourcemaps.init())
             .pipe(sass({errLogToConsole: true}))
             .pipe(prefixer())
-            .pipe(cssmin())
+            .pipe(cssclean({debug: true}, function(details) {
+                console.log(details.name + ': ' + details.stats.originalSize);
+                console.log(details.name + ': ' + details.stats.minifiedSize);
+            }))
             .pipe(sourcemaps.write('../css', {
                 sourceMappingURL: function(file) {
                     return file.relative + '.map';
