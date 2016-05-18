@@ -20,7 +20,7 @@
     "gulp-file-include": "^0.13.7",
     "gulp-ftp": "^1.1.0",
     "gulp-imagemin": "^2.4.0",
-    "gulp-minify-css": "",
+    "gulp-clean-css": "*",
     "gulp-plato": "^1.0.2",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
