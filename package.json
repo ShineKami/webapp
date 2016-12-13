@@ -1,35 +1,33 @@
 {
-  "name": "Girlsberry",
+  "name": "WebApp",
   "version": "1.0.0",
-  "description": "Girlsberry project",
-  "license": "GNU/Linux",
+  "description": "WebApp project tpl. Gulp",
   "author": {
-    "name": "Stanislav Vyshynski",
+    "name": "Stanislav Vyshynski(ShineKami)",
     "email": "shinekami@madys.net",
     "url": "https://madys.net/"
   },
   "repository": {
     "type": "git",
-    "url": "https://shinekami@bitbucket.org/shinekami/girlsberry.git"
+    "url": "git@github.com:ShineKami/webapp.git"
   },
   "devDependencies": {
-    "bower": "^1.7.7",
-    "browser-sync": "^2.11.2",
+    "bower": "^1.7.9",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.7",
     "gulp-file-include": "^0.13.7",
-    "gulp-ftp": "^1.1.0",
+    "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^2.4.0",
-    "gulp-clean-css": "*",
-    "gulp-plato": "^1.0.2",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.0",
-    "gulp-sourcemaps": "^1.6.0",
+    "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5",
     "imagemin-pngquant": "^4.2.2",
-    "rimraf": "^2.4.3"
+    "rimraf": "^2.4.3",
+    "run-sequence": "^1.2.2"
   }
 }
