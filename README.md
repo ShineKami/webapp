@@ -1,5 +1,5 @@
 # Webapp Template
-Webapp Template - шаблон проекта для fronted, под gulp.
+Webapp Template - шаблон проекта для fronted, под gulp4.
 
 <b>Использование:</b>
 <br>
@@ -7,8 +7,6 @@ Webapp Template - шаблон проекта для fronted, под gulp.
 <br>
 2) cd webapp
 <br>
-3) npm install
-<br>
-4) bower install
+3) yarn install
 <br>
 Profit! :)

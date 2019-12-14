@@ -1,18 +1,16 @@
 /*
  * Third party
  */
-@@include('../../bower_components/jquery/dist/jquery.js')
+@@include('../../node_modules/jquery/dist/jquery.js')
 
 /*
  * Frontend WebApp
  */
 (function($) {
-	'use strict';
-
 	function WebApp(){
 		this.appname = "WebApp";
 		this.version = "1.0.0";
-		this.author = "ShineKami(https://madys.net/)";
+		this.author = "ShineKami";
 	}
   
   //Init example function

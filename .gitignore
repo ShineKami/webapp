@@ -2,7 +2,7 @@
 *.log
 node_modules
 bower_components
-build
+dist
 *.node
 components
 coverage
